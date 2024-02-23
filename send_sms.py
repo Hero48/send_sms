@@ -66,41 +66,46 @@ for index, row in df.iterrows():
 session.commit()
 session.close()
 
-
-search  = st.text_input('Search', placeholder='Search by index number')
+passwd = st.text_input('Passcode', placeholder='Enter your passcode')
 st.write('___')
 
+if passwd == '8822661':
 
-if search:
-    # search database for the index number
-
-    users = session.query(Voters).filter(Voters.index_no.contains(search)).all()
-    if users:
-        col1, col2, col3, col4, col5 = st.columns(5)
-
-        for user in users:
-            with col1:
-                st.write(user.name)
-               
-
-            with col2:
-                st.write(user.index_no)
-               
-            
-            with col3:
-                st.write(f"0{user.phone}")
-               
-            
-            with col4:
-                if st.button('Send', key=user.index_no, type='secondary'):
-                    send(user.index_no, user.phone, user.password)
-                    st.success('SMS sent')
-            with col5:
-                st.write(user.password)
-    else:
-        st.write('No results found')
+    search  = st.text_input('Search', placeholder='Search by index number')
+    st.write('___')
 
 
+    if search:
+        # search database for the index number
+
+        users = session.query(Voters).filter(Voters.index_no.contains(search)).all()
+        if users:
+            col1, col2, col3, col4, col5 = st.columns(5)
+
+            for user in users:
+                with col1:
+                    st.write(user.name)
+                
+
+                with col2:
+                    st.write(user.index_no)
+                
+                
+                with col3:
+                    st.write(f"0{user.phone}")
+                
+                
+                with col4:
+                    if st.button('Send', key=user.index_no, type='secondary'):
+                        send(user.index_no, user.phone, user.password)
+                        st.success('SMS sent')
+                with col5:
+                    st.write(user.password)
+        else:
+            st.write('No results found')
+
+else:
+    st.write('Wrong passcode')
 
 
 
