@@ -76,7 +76,7 @@ if search:
 
     users = session.query(Voters).filter(Voters.index_no.contains(search)).all()
     if users:
-        col1, col2, col3, col4 = st.columns(4)
+        col1, col2, col3, col4, col5 = st.columns(5)
 
         for user in users:
             with col1:
@@ -95,7 +95,8 @@ if search:
                 if st.button('Send', key=user.index_no, type='secondary'):
                     send(user.index_no, user.phone, user.password)
                     st.success('SMS sent')
-               
+            with col5:
+                st.write(user.password)
     else:
         st.write('No results found')
 
